@@ -5,8 +5,6 @@ import React, {
 
 import API from "../services/api";
 import DashboardCards from "../components/DashboardCards";
-import EmissionTable from "../components/EmissionTable";
-import ReviewTable from "../components/ReviewTable";
 
 function Dashboard() {
 
