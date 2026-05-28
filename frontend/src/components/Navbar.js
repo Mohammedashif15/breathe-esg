@@ -1,13 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
 
+    const navigate = useNavigate();
+
+    // ================= LOGOUT FUNCTION =================
+
+    const handleLogout = () => {
+
+        // Remove login session
+        localStorage.removeItem("isLoggedIn");
+
+        alert("Logged Out Successfully ✅");
+
+        // Redirect to login page
+        navigate("/login");
+    };
+
     return (
+
         <nav className="navbar">
 
-            <h2>Breathe ESG</h2>
+            {/* ===== LOGO ===== */}
+
+            <h2 className="logo">
+                🌿 Breathe ESG
+            </h2>
+
+            {/* ===== NAVIGATION LINKS ===== */}
 
             <div className="nav-links">
 
@@ -28,6 +50,16 @@ function Navbar() {
                 </Link>
 
             </div>
+
+            {/* ===== LOGOUT BUTTON ===== */}
+
+            <button
+                className="logout-btn"
+                onClick={handleLogout}
+            >
+                Logout
+            </button>
+
         </nav>
     );
 }
