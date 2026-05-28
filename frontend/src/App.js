@@ -1,8 +1,9 @@
 import React from "react";
 import {
-    BrowserRouter,
-    Routes,
-    Route
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -12,46 +13,98 @@ import Upload from "./pages/Upload";
 import Emissions from "./pages/Emissions";
 import Reviews from "./pages/Reviews";
 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 import "./App.css";
 
 function App() {
+  return (
+    <BrowserRouter>
 
-    return (
+      <Routes>
 
-        <BrowserRouter>
+        {/* ================= LOGIN ================= */}
 
-            <Navbar />
+        <Route
+          path="/"
+          element={<Login />}
+        />
 
-            <div className="container">
+        {/* ================= REGISTER ================= */}
 
-                <Routes>
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
-                    <Route
-                        path="/"
-                        element={<Dashboard />}
-                    />
+        {/* ================= DASHBOARD ================= */}
 
-                    <Route
-                        path="/upload"
-                        element={<Upload />}
-                    />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <Navbar />
+              <div className="container">
+                <Dashboard />
+              </div>
+            </>
+          }
+        />
 
-                    <Route
-                        path="/emissions"
-                        element={<Emissions />}
-                    />
+        {/* ================= UPLOAD ================= */}
 
-                    <Route
-                        path="/reviews"
-                        element={<Reviews />}
-                    />
+        <Route
+          path="/upload"
+          element={
+            <>
+              <Navbar />
+              <div className="container">
+                <Upload />
+              </div>
+            </>
+          }
+        />
 
-                </Routes>
+        {/* ================= EMISSIONS ================= */}
 
-            </div>
+        <Route
+          path="/emissions"
+          element={
+            <>
+              <Navbar />
+              <div className="container">
+                <Emissions />
+              </div>
+            </>
+          }
+        />
 
-        </BrowserRouter>
-    );
+        {/* ================= REVIEWS ================= */}
+
+        <Route
+          path="/reviews"
+          element={
+            <>
+              <Navbar />
+              <div className="container">
+                <Reviews />
+              </div>
+            </>
+          }
+        />
+
+        {/* ================= UNKNOWN ROUTE ================= */}
+
+        <Route
+          path="*"
+          element={<Navigate to="/" />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
+  );
 }
 
 export default App;
