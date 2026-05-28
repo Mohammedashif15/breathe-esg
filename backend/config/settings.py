@@ -3,15 +3,32 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-breathe-esg-secret-key'
 
-DEBUG = True
+# ========================
+# SECURITY
+# ========================
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-breathe-esg-secret-key"
+)
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
 # ========================
-# APPS
+# ALLOWED HOSTS
+# ========================
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".onrender.com",
+    ".railway.app",
+    ".vercel.app",
+]
+
+
+# ========================
+# INSTALLED APPS
 # ========================
 INSTALLED_APPS = [
     'corsheaders',
@@ -39,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -73,10 +91,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # ========================
-# DATABASE (FIXED)
+# DATABASE (SQLite)
 # ========================
-# TEMPORARY SAFE DATABASE (NO DJONGO, NO MONGODB ERRORS)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -90,10 +106,12 @@ DATABASES = {
 # ========================
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
 ]
 
@@ -102,19 +120,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # INTERNATIONALIZATION
 # ========================
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Kolkata'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # ========================
-# STATIC / MEDIA
+# STATIC + MEDIA
 # ========================
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -127,10 +142,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # ========================
-# CORS
+# CORS + CSRF (IMPORTANT)
 # ========================
+
+# Replace with your actual Vercel URL
+# ========================
+# CORS + CSRF (IMPORTANT)
+# ========================
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://breathe-esg-r57s.vercel.app",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://breathe-esg-r57s.vercel.app",
 ]
 
 
@@ -141,6 +168,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.FormParser',
